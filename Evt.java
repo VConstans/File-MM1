@@ -2,9 +2,9 @@ public class Evt
 {
 	private int typeEvt;
 	private int numClient;
-	private int date;
+	private double date;
 
-	public Evt(int type, int num ,int date)
+	public Evt(int type, int num ,double date)
 	{
 		this.typeEvt = type;
 		this.numClient = num;
