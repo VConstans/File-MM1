@@ -6,23 +6,28 @@ public class Ech
 	private double dateDepartDernierClient=0;
 	private int indexCourant = 0;
 	private int nbClient = 0;
+	private double lambda;
+	private double mu;
 
-	public void initEch()
+	public void Ech(double lambda, double mu /*XXX temps*/)
 	{
+		this.lambda = lambda;
+		this.mu = mu;
+
 		echeancier.addFirst(new Evt(0,0));
 	}
 
-	private double creationNouvDate(int type)
+	private double creationNouvDate(double dateEvtCourant,int type)
 	{
 		if(type == 0)
 		{
-			//TODO loi exp lambda
+			return dateEvtCourant+Utile.interTemps(this.lambda);
 		}
 		else
 		{
 			if(nbClient == 0)
 			{
-			//TODO loi exp mu	
+				return dateEvtCourant+Utile.interTemps(mu);
 			}
 			else
 			{
@@ -31,16 +36,27 @@ public class Ech
 		}
 	}
 
-	private void ajoutEvt(int numClient,int type)
+	private void ajoutEvt(Evt evtCourant,int type)
 	{
-		double dateNouvElt = creationNouvDate(type);
+		double dateNouvElt = creationNouvDate(evtCourant.date,type);
 
 		int indexTmp  = indexCourant;
+		//XXX parcour avec NEXT?
 		while(dateNouvElt > echeancier.get(indexTmp).date && indexTmp < echeancier.size())
 		{
 			indexTmp +=1;
 		}
-		echeancier.add(indexTmp,new Evt(type,numClient,date));
+
+		if(type == 0)
+		{
+			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient+1,date));
+		}
+		else
+		{
+			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,date));
+		}
+
+
 		if(dateNouvElt > dateDepartDernierClient)
 		{
 			dateDepartDernierClient = dateNouvElt;
@@ -53,8 +69,8 @@ public class Ech
 
 		if(evtCourant.type == 0)
 		{
-			ajoutEvt(evtCourant.numClient+1, 0);
-			ajoutEvt(evtCourant.numClient, 1);
+			ajoutEvt(evtCourant, 0);
+			ajoutEvt(evtCourant, 1);
 
 			nbClient +=1;
 		}
