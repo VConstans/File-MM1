@@ -29,11 +29,11 @@ public class Ech
 		{
 			if(nbClient == 0)
 			{
-				return dateEvtCourant+Utile.interTemps(mu);
+				return dateEvtCourant+Utile.interTemps(this.mu);
 			}
 			else
 			{
-				return (dateDepartDernierClient + Utile.interTemps(mu));
+				return (dateDepartDernierClient + Utile.interTemps(this.mu));
 			}
 		}
 	}
@@ -42,34 +42,43 @@ public class Ech
 	{
 		double dateNouvElt = creationNouvDate(evtCourant.date,type);
 
-		if(dateNouvElt > tempsMax)
+		if(dateNouvElt > tempsMax && type == 0)
 		{
 			return false;
 		}
 
 		int indexTmp  = indexCourant;
 		//XXX parcour avec NEXT?
+		if(dateNouvElt > 6000000)
+	System.out.println("Commence recherche ");
 		while(indexTmp < echeancier.size() && dateNouvElt > echeancier.get(indexTmp).date)
 		{
 			indexTmp +=1;
 		}
 
+		if(dateNouvElt > 6000000)
+	System.out.println("termine recherche ");
 		if(type == 0)
 		{
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient+1,dateNouvElt));
+		if(dateNouvElt > 6000000)
 			System.out.print("Ajout arrivé client "+(evtCourant.numClient+1));
 		}
 		else
 		{
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
+		if(dateNouvElt > 6000000)
 			System.out.print("Ajout depart client"+(evtCourant.numClient));
 		}
 
+		if(dateNouvElt > 6000000)
 		System.out.print("\t"+dateNouvElt+"\n");
 
 
-		if(dateNouvElt > dateDepartDernierClient)
+		if(type == 1 && dateNouvElt > dateDepartDernierClient)
 		{
+		if(dateNouvElt > 6000000)
+		System.out.println("maj date");
 			dateDepartDernierClient = dateNouvElt;
 		}
 
