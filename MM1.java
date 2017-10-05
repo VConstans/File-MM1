@@ -2,13 +2,22 @@ public class MM1
 {
 	public static void main(String[] args)
 	{
-		Stats statSimu = new Stats(5,6,Integer.parseInt(args[0]));
-		Ech echeancier = new Ech(5,6,Integer.parseInt(args[0]),statSimu);
-
-		while(!echeancier.finEch())
+		if(args.length <4)
 		{
-			echeancier.traitementEvt();
+			System.err.println("Usage: java MM1 <lambda> <mu> <duree> <debug[0/1]>");
+			System.exit(-1);
 		}
+		double lambda = Double.parseDouble(args[0]);
+		double mu = Double.parseDouble(args[1]);
+		double duree = Double.parseDouble(args[2]);
+		int debug = Integer.parseInt(args[3]);
+
+		Stats statSimu = new Stats(lambda,mu,duree);
+
+		Ech echeancier = new Ech(lambda,mu,duree,statSimu);
+
+		echeancier.startSimulation();
+
 		statSimu.resTheorique();
 		statSimu.resSimulation();
 	}
