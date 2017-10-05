@@ -26,7 +26,7 @@ public class Stats
 
 	public void resTheorique()
 	{
-		System.out.println("-------------\nRESULTAT THEORIQUE\n-----------");
+		System.out.println("------------------\nRESULTAT THEORIQUE\n------------------");
 
 		if(lambda < mu)
 		{
@@ -71,13 +71,15 @@ public class Stats
 			tmpMoyenSejour += tmpSejourClient.get(i).doubleValue();
 		}
 		
-		System.out.println("\n\n\n-------------\nRESULTAT SIMULATION\n-----------");
+		System.out.println("\n\n\n-------------------\nRESULTAT SIMULATION\n-------------------");
 		System.out.println("Nombre total de clients = "+nbClientTot);
 		System.out.println("Proportion de client sans attente = "+(clientSansAttente/nbClientTot));
 		System.out.println("Proportion de client avec attente = "+(clientAvecAttente/nbClientTot));
 		System.out.println("Debit = "+(nbClientTot/duree));
 		System.out.println("Nombre moyen de client dans le systeme = "+(nbMoyenClientSysteme/duree));
 		System.out.println("Temps moyen de sejour = "+(tmpMoyenSejour/nbClientTot));
+
+		System.out.println("\n\n\n");
 	}
 
 
