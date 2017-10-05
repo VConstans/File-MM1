@@ -17,7 +17,7 @@ public class Stats
 	private double derniereDate = 0;
 	
 
-	public Stats(int lambda, int mu, double duree)
+	public Stats(double lambda, double mu, double duree)
 	{
 		this.lambda = lambda;
 		this.mu = mu;
