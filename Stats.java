@@ -22,7 +22,6 @@ public class Stats
 		this.lambda = lambda;
 		this.mu = mu;
 		this.duree = duree;
-//		nbClientSysteme.add(0,new Double(0));
 	}
 
 	public void resTheorique()
@@ -52,15 +51,22 @@ public class Stats
 	{
 
 		double nbMoyenClientSysteme = 0;
-		int j=0;
-		for(j=0;j<nbClientSysteme.size();j++)
+
+		int i=0;
+
+		int tailleNbClientSysteme = nbClientSysteme.size();
+
+		for(i=0;i<tailleNbClientSysteme;i++)
 		{
-			nbMoyenClientSysteme += j*(nbClientSysteme.get(j).doubleValue());
+			nbMoyenClientSysteme += i*(nbClientSysteme.get(i).doubleValue());
 		}
 
 		double tmpMoyenSejour = 0;
-		int i = 0;
-		for(i=0;i<tmpSejourClient.size();i++)
+
+
+		int tailleTmpSejourClient = tmpSejourClient.size();
+
+		for(i=0;i<tailleTmpSejourClient;i++)
 		{
 			tmpMoyenSejour += tmpSejourClient.get(i).doubleValue();
 		}

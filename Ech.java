@@ -55,38 +55,26 @@ public class Ech
 
 		Iterator<Evt> itEch = echeancier.iterator();
 
-		//XXX parcour avec NEXT?
-//		if(dateNouvElt > 6000000)
-//	System.out.println("Commence recherche ");
 		while(itEch.hasNext() && dateNouvElt > itEch.next().date)
 		{
 			indexTmp +=1;
 		}
 
-//		if(dateNouvElt > 6000000)
-//	System.out.println("termine recherche ");
 		if(type == 0)
 		{
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient+1,dateNouvElt));
-//		if(dateNouvElt > 6000000)
-//			System.out.print("Ajout arrivé client "+(evtCourant.numClient+1));
 		}
 		else
 		{
 			statEch.addSejourClient(evtCourant.date,dateNouvElt,evtCourant.numClient);
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
-//		if(dateNouvElt > 6000000)
-//			System.out.print("Ajout depart client"+(evtCourant.numClient));
 		}
 
-//		if(dateNouvElt > 6000000)
 		System.out.print("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n");
 
 
 		if(type == 1 && dateNouvElt > dateDepartDernierClient)
 		{
-//		if(dateNouvElt > 6000000)
-//		System.out.println("maj date");
 			dateDepartDernierClient = dateNouvElt;
 		}
 
