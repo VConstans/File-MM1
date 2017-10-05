@@ -14,7 +14,7 @@ public class MM1
 
 		Stats statSimu = new Stats(lambda,mu,duree);
 
-		Ech echeancier = new Ech(lambda,mu,duree,statSimu);
+		Ech echeancier = new Ech(lambda,mu,duree,debug,statSimu);
 
 		echeancier.startSimulation();
 

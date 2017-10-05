@@ -10,12 +10,14 @@ public class Ech
 	private double mu;
 	private double tempsMax;
 	private Stats statEch;
+	private int debugMode;
 
-	public Ech(double lambda, double mu, double TMax,Stats statEch)
+	public Ech(double lambda, double mu, double TMax,int debugMode,Stats statEch)
 	{
 		this.lambda = lambda;
 		this.mu = mu;
 		this.tempsMax = TMax;
+		this.debugMode = debugMode;
 		this.statEch = statEch;
 
 		echeancier.addFirst(new Evt(0,0,0));
@@ -70,7 +72,7 @@ public class Ech
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
 		}
 
-		System.out.print("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n");
+		debug("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n");
 
 
 		if(type == 1 && dateNouvElt > dateDepartDernierClient)
@@ -123,6 +125,14 @@ public class Ech
 			traitementEvt();
 		}
 
+	}
+
+	private void debug(String mess)
+	{
+		if(debugMode == 1)
+		{
+			System.out.println(mess);
+		}
 	}
 
 }
