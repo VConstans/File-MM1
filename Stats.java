@@ -109,13 +109,11 @@ public class Stats
 
 	public void ajoutClientSansAttente()
 	{
-		System.out.println("Sans attente");
 		clientSansAttente += 1;
 	}
 
 	public void ajoutClientAvecAttente()
 	{
-		System.out.println("Avec attente");
 		clientAvecAttente += 1;
 	}
 
