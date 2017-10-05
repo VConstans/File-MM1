@@ -81,7 +81,7 @@ public class Ech
 		return true;
 	}
 
-	public void traitementEvt()
+	private void traitementEvt()
 	{
 		if( echeancier.size() > 0)
 		{
@@ -111,8 +111,18 @@ public class Ech
 		}
 	}
 
-	public boolean finEch()
+	private boolean finEch()
 	{
 		return (echeancier.size() == 0);
 	}
+
+	public void startSimulation()
+	{
+		while(!finEch())
+		{
+			traitementEvt();
+		}
+
+	}
+
 }
