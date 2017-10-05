@@ -9,12 +9,14 @@ public class Ech
 	private double lambda;
 	private double mu;
 	private double tempsMax;
+	private Stats statEch;
 
-	public Ech(double lambda, double mu, double TMax)
+	public Ech(double lambda, double mu, double TMax,Stats statEch)
 	{
 		this.lambda = lambda;
 		this.mu = mu;
 		this.tempsMax = TMax;
+		this.statEch = statEch;
 
 		echeancier.addFirst(new Evt(0,0,0));
 	}
@@ -29,10 +31,12 @@ public class Ech
 		{
 			if(nbClient == 0)
 			{
+				statEch.ajoutClientSansAttente();
 				return dateEvtCourant+Utile.interTemps(this.mu);
 			}
 			else
 			{
+				statEch.ajoutClientAvecAttente();
 				return (dateDepartDernierClient + Utile.interTemps(this.mu));
 			}
 		}
@@ -47,38 +51,42 @@ public class Ech
 			return false;
 		}
 
-		int indexTmp  = indexCourant;
+		int indexTmp  = 0;
+
+		Iterator<Evt> itEch = echeancier.iterator();
+
 		//XXX parcour avec NEXT?
-		if(dateNouvElt > 6000000)
-	System.out.println("Commence recherche ");
-		while(indexTmp < echeancier.size() && dateNouvElt > echeancier.get(indexTmp).date)
+//		if(dateNouvElt > 6000000)
+//	System.out.println("Commence recherche ");
+		while(itEch.hasNext() && dateNouvElt > itEch.next().date)
 		{
 			indexTmp +=1;
 		}
 
-		if(dateNouvElt > 6000000)
-	System.out.println("termine recherche ");
+//		if(dateNouvElt > 6000000)
+//	System.out.println("termine recherche ");
 		if(type == 0)
 		{
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient+1,dateNouvElt));
-		if(dateNouvElt > 6000000)
-			System.out.print("Ajout arrivé client "+(evtCourant.numClient+1));
+//		if(dateNouvElt > 6000000)
+//			System.out.print("Ajout arrivé client "+(evtCourant.numClient+1));
 		}
 		else
 		{
+			statEch.addSejourClient(evtCourant.date,dateNouvElt,evtCourant.numClient);
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
-		if(dateNouvElt > 6000000)
-			System.out.print("Ajout depart client"+(evtCourant.numClient));
+//		if(dateNouvElt > 6000000)
+//			System.out.print("Ajout depart client"+(evtCourant.numClient));
 		}
 
-		if(dateNouvElt > 6000000)
-		System.out.print("\t"+dateNouvElt+"\n");
+//		if(dateNouvElt > 6000000)
+		System.out.print("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n");
 
 
 		if(type == 1 && dateNouvElt > dateDepartDernierClient)
 		{
-		if(dateNouvElt > 6000000)
-		System.out.println("maj date");
+//		if(dateNouvElt > 6000000)
+//		System.out.println("maj date");
 			dateDepartDernierClient = dateNouvElt;
 		}
 
@@ -87,30 +95,36 @@ public class Ech
 
 	public void traitementEvt()
 	{
-		if(indexCourant < echeancier.size())
+		if( echeancier.size() > 0)
 		{
-			Evt evtCourant = echeancier.get(indexCourant);
+			Evt evtCourant = echeancier.getFirst();
 
 			if(evtCourant.typeEvt == 0)
 			{
-				if(ajoutEvt(evtCourant, 0))
-				{
-					ajoutEvt(evtCourant, 1);
+				ajoutEvt(evtCourant, 0);
+				
+				ajoutEvt(evtCourant, 1);
 
-					nbClient +=1;
-				}
+				statEch.addNbClientSysteme(nbClient,evtCourant.date);
+
+				nbClient +=1;
+
+				statEch.ajoutClient();
+			
 			}
 			else
 			{
+				statEch.addNbClientSysteme(nbClient,evtCourant.date);
+
 				nbClient -=1;
 			}
 			
-			indexCourant +=1;
+			echeancier.removeFirst();
 		}
 	}
 
 	public boolean finEch()
 	{
-		return (indexCourant==echeancier.size());
+		return (echeancier.size() == 0);
 	}
 }
