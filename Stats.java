@@ -1,3 +1,9 @@
+//Auteur CONSTANS Victor
+
+/*
+/ Classe servant à recuperer et traiter des donnees statistique sur une file M/M/1
+*/
+
 import java.util.*;
 
 public class Stats
@@ -74,8 +80,10 @@ public class Stats
 	}
 
 
+	//Fonction permettant 
 	public void addNbClientSysteme(int nb, double date)
 	{
+		//Calcul de la duree pendant laquel il y a nb client
 		double dureeCalc = date - derniereDate;
 
 		if(nb < nbClientSysteme.size())
@@ -90,21 +98,25 @@ public class Stats
 		derniereDate = date;
 	}
 
+	//Fonction permettant de sommer les temps des sejour des clients
 	public void addSejourClient(double dateCourant,double nouvDate,int client)
 	{
 		tmpMoyenSejour += nouvDate-dateCourant;
 	}
 
+	//Ajout d'un client au nombre total de client
 	public void ajoutClient()
 	{
 		nbClientTot +=1;
 	}
 
+	//Ajout d'un client au nombre de client n'ayant pas d'attente dans la file
 	public void ajoutClientSansAttente()
 	{
 		clientSansAttente += 1;
 	}
 
+	//Ajout d'un client au nombre de client ayant une attente dans la file
 	public void ajoutClientAvecAttente()
 	{
 		clientAvecAttente += 1;

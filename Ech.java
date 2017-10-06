@@ -1,10 +1,15 @@
+//Auteur CONSTANS Victor
+/*
+/Classe servant d'echeancier pour la simulation d'une file M/M/1.
+*/
+
 import java.util.*;
 
 public class Ech
 {
 	private LinkedList<Evt> echeancier = new LinkedList<Evt>();
 	private double dateDepartDernierClient=0;
-	private int nbClient = 0;
+	private int nbClientEnAttente = 0;
 	private double lambda;
 	private double mu;
 	private double tempsMax;
@@ -19,6 +24,7 @@ public class Ech
 		this.debugMode = debugMode;
 		this.statEch = statEch;
 
+		//Initialisation de l'echeancier
 		echeancier.addFirst(new Evt(0,0,0));
 	}
 
@@ -26,11 +32,13 @@ public class Ech
 	{
 		if(type == 0)
 		{
+			//Si l'on cree un evenement de type arrive
 			return dateEvtCourant+Utile.interTemps(this.lambda);
 		}
 		else
 		{
-			if(nbClient == 0)
+			//Si l'on cree un evenement de type depart
+			if(nbClientEnAttente == 0)
 			{
 				statEch.ajoutClientSansAttente();
 				return dateEvtCourant+Utile.interTemps(this.mu);
@@ -43,13 +51,15 @@ public class Ech
 		}
 	}
 
-	private boolean ajoutEvt(Evt evtCourant,int type)
+	private void ajoutEvt(Evt evtCourant,int type)
 	{
 		double dateNouvElt = creationNouvDate(evtCourant.date,type);
 
 		if(dateNouvElt > tempsMax && type == 0)
 		{
-			return false;
+			//Si la date de l'arrive suivante est posterieur à la duree max de la simulation,
+			//on arrete de generer des evenements
+			return;
 		}
 
 		int indexTmp  = 0;
@@ -63,10 +73,12 @@ public class Ech
 
 		if(type == 0)
 		{
+			//Si l'on cree un evenement de type arrive pour le client suivant
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient+1,dateNouvElt));
 		}
 		else
 		{
+			//Si l'on cree un evenement de type depart pour le client actuel
 			statEch.addSejourClient(evtCourant.date,dateNouvElt,evtCourant.numClient);
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
 		}
@@ -79,7 +91,6 @@ public class Ech
 			dateDepartDernierClient = dateNouvElt;
 		}
 
-		return true;
 	}
 
 	private void traitementEvt()
@@ -90,22 +101,24 @@ public class Ech
 
 			if(evtCourant.typeEvt == 0)
 			{
+				//Creation de l'evenement d'arrive du prochain client
 				ajoutEvt(evtCourant, 0);
 				
+				//Creation de l'evenement de depart du client actuel
 				ajoutEvt(evtCourant, 1);
 
-				statEch.addNbClientSysteme(nbClient,evtCourant.date);
+				statEch.addNbClientSysteme(nbClientEnAttente,evtCourant.date);
 
-				nbClient +=1;
+				nbClientEnAttente +=1;
 
 				statEch.ajoutClient();
 			
 			}
 			else
 			{
-				statEch.addNbClientSysteme(nbClient,evtCourant.date);
+				statEch.addNbClientSysteme(nbClientEnAttente,evtCourant.date);
 
-				nbClient -=1;
+				nbClientEnAttente -=1;
 			}
 			
 			echeancier.removeFirst();
@@ -119,6 +132,7 @@ public class Ech
 
 	public void startSimulation()
 	{
+		//Boucle de simulation
 		while(!finEch())
 		{
 			traitementEvt();
