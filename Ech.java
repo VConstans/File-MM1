@@ -4,7 +4,6 @@ public class Ech
 {
 	private LinkedList<Evt> echeancier = new LinkedList<Evt>();
 	private double dateDepartDernierClient=0;
-	private int indexCourant = 0;
 	private int nbClient = 0;
 	private double lambda;
 	private double mu;
@@ -72,7 +71,7 @@ public class Ech
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
 		}
 
-		debug("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n");
+		debug("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n",evtCourant.date);
 
 
 		if(type == 1 && dateNouvElt > dateDepartDernierClient)
@@ -127,9 +126,9 @@ public class Ech
 
 	}
 
-	private void debug(String mess)
+	private void debug(String mess,double date)
 	{
-		if(debugMode == 1)
+		if(debugMode == 1 && date > 6000000)
 		{
 			System.out.println(mess);
 		}
