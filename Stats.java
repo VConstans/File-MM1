@@ -12,9 +12,9 @@ public class Stats
 	private double nbClientTot=0;
 	private double clientSansAttente=0;
 	private double clientAvecAttente=0;
-	private ArrayList<Double> tmpSejourClient = new ArrayList<Double>();
 	private ArrayList<Double> nbClientSysteme = new ArrayList<Double>();
 	private double derniereDate = 0;
+	private double tmpMoyenSejour = 0;
 	
 
 	public Stats(double lambda, double mu, double duree)
@@ -61,15 +61,6 @@ public class Stats
 			nbMoyenClientSysteme += i*(nbClientSysteme.get(i).doubleValue());
 		}
 
-		double tmpMoyenSejour = 0;
-
-
-		int tailleTmpSejourClient = tmpSejourClient.size();
-
-		for(i=0;i<tailleTmpSejourClient;i++)
-		{
-			tmpMoyenSejour += tmpSejourClient.get(i).doubleValue();
-		}
 		
 		System.out.println("\n\n\n-------------------\nRESULTAT SIMULATION\n-------------------");
 		System.out.println("Nombre total de clients = "+nbClientTot);
@@ -101,7 +92,7 @@ public class Stats
 
 	public void addSejourClient(double dateCourant,double nouvDate,int client)
 	{
-		tmpSejourClient.add(client,new Double(nouvDate-dateCourant));
+		tmpMoyenSejour += nouvDate-dateCourant;
 	}
 
 	public void ajoutClient()
