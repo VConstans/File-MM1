@@ -3,7 +3,13 @@ public class Utile
 	public static double tirageAleatoire()
 	{
 		//TODO borne
-		return Math.random();
+		double ran;
+		do
+		{
+			ran = Math.random();
+		}while(ran == 0 || ran == 1);
+
+		return ran;
 	}
 
 	public static double loiExp(double lambda, double va)
