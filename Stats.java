@@ -44,8 +44,8 @@ public class Stats
 			System.out.println("Probabilite de service sans attente (1-ro) = "+(1-ro));
 			System.out.println("Probabilite de file occupee (ro) = "+ro);
 			System.out.println("Debit (lambda) = "+lambda);
-			System.out.println("Esperance nombre de clients (ro/(1-ro))"+(ro/(1-ro)));
-			System.out.println("Temps moyen de sejour (1/(mu*(1-ro)))"+(1/(mu*(1-ro))));
+			System.out.println("Esperance nombre de clients (ro/(1-ro)) = "+(ro/(1-ro)));
+			System.out.println("Temps moyen de sejour (1/(mu*(1-ro))) = "+(1/(mu*(1-ro))));
 		}
 		else
 		{
