@@ -30,6 +30,10 @@ public class Stats
 		this.duree = duree;
 	}
 
+
+	/*
+	/ Affichage des résultats théorique de la simulation
+	*/
 	public void resTheorique()
 	{
 		System.out.println("------------------\nRESULTAT THEORIQUE\n------------------");
@@ -53,6 +57,10 @@ public class Stats
 		}
 	}
 	
+
+	/*
+	* Affichage des résultats de la simulation
+	*/
 	public void resSimulation()
 	{
 
@@ -80,7 +88,10 @@ public class Stats
 	}
 
 
-	//Fonction permettant 
+	/*
+	/ Fonction permettant de calculer le temps total où il y a nb client dans le système
+	/ au fur et à mesure de la simulation
+	*/
 	public void addNbClientSysteme(int nb, double date)
 	{
 		//Calcul de la duree pendant laquel il y a nb client
@@ -98,25 +109,33 @@ public class Stats
 		derniereDate = date;
 	}
 
-	//Fonction permettant de sommer les temps des sejour des clients
+	/*
+	/ Fonction permettant de sommer les temps des sejour des clients
+	*/
 	public void addSejourClient(double dateCourant,double nouvDate,int client)
 	{
 		tmpMoyenSejour += nouvDate-dateCourant;
 	}
 
-	//Ajout d'un client au nombre total de client
+	/*
+	/ Ajout d'un client au nombre total de client
+	*/
 	public void ajoutClient()
 	{
 		nbClientTot +=1;
 	}
 
-	//Ajout d'un client au nombre de client n'ayant pas d'attente dans la file
+	/*
+	/ Ajout d'un client au nombre de client n'ayant pas d'attente dans la file
+	*/
 	public void ajoutClientSansAttente()
 	{
 		clientSansAttente += 1;
 	}
 
-	//Ajout d'un client au nombre de client ayant une attente dans la file
+	/*
+	/ Ajout d'un client au nombre de client ayant une attente dans la file
+	*/
 	public void ajoutClientAvecAttente()
 	{
 		clientAvecAttente += 1;

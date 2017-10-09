@@ -1,3 +1,9 @@
+// Auteur CONSTANS Victor
+
+/*
+/ Classe de lancement de la simulation
+*/
+
 public class MM1
 {
 	public static void main(String[] args)

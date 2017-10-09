@@ -28,6 +28,10 @@ public class Ech
 		echeancier.addFirst(new Evt(0,0,0));
 	}
 
+	/*
+	/ Création d'une date d'arrivé du client suivant (si type égale 0) ou de départ du client actuelle
+	/ (si type égale 1)
+	*/
 	private double creationNouvDate(double dateEvtCourant,int type)
 	{
 		if(type == 0)
@@ -51,6 +55,13 @@ public class Ech
 		}
 	}
 
+
+	/*
+	/ Créé un nouvel évenement et le place dans l'échéancier de manière chronologique
+	/ Si le type est égal à 0, ce nouvel événement sera l'arrivé du client suivant le client
+	/ stocker dans evtCourant.
+	/ Si le type est égal à 1, ce nouvel événement sera le depart du client stocker dans evtCourant
+	*/
 	private void ajoutEvt(Evt evtCourant,int type)
 	{
 		double dateNouvElt = creationNouvDate(evtCourant.date,type);
@@ -71,19 +82,23 @@ public class Ech
 			indexTmp +=1;
 		}
 
+		String messageDebug;
+
 		if(type == 0)
 		{
 			//Si l'on cree un evenement de type arrive pour le client suivant
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient+1,dateNouvElt));
+			messageDebug = new String("Date = "+evtCourant.date+"\tArrivee\tClient n° "+evtCourant.numClient+"\tTaille ech = "+echeancier.size()+"\n");
 		}
 		else
 		{
 			//Si l'on cree un evenement de type depart pour le client actuel
 			statEch.addSejourClient(evtCourant.date,dateNouvElt,evtCourant.numClient);
 			echeancier.add(indexTmp,new Evt(type,evtCourant.numClient,dateNouvElt));
+			messageDebug = new String("Date = "+evtCourant.date+"\tDepart\tClient n° "+evtCourant.numClient+"\tTaille ech = "+echeancier.size()+"\n");
 		}
 
-		debug("\t"+dateNouvElt+"\t"+indexTmp+"/"+echeancier.size()+"\n",evtCourant.date);
+		debug(messageDebug);
 
 
 		if(type == 1 && dateNouvElt > dateDepartDernierClient)
@@ -93,6 +108,10 @@ public class Ech
 
 	}
 
+
+	/*
+	/ Traitement du premier événement dans l'échéancier
+	*/
 	private void traitementEvt()
 	{
 		if( echeancier.size() > 0)
@@ -125,11 +144,19 @@ public class Ech
 		}
 	}
 
+
+	/*
+	/ Teste si l'échéancier est vide, et que la simulation est donc terminée
+	*/
 	private boolean finEch()
 	{
 		return (echeancier.size() == 0);
 	}
 
+
+	/*
+	/ Boucle de simulation
+	*/
 	public void startSimulation()
 	{
 		//Boucle de simulation
@@ -140,9 +167,13 @@ public class Ech
 
 	}
 
-	private void debug(String mess,double date)
+
+	/*
+	/ Affichage détaillé de la simulation
+	*/
+	private void debug(String mess)
 	{
-		if(debugMode == 1 && date > 6000000)
+		if(debugMode == 1)
 		{
 			System.out.println(mess);
 		}
