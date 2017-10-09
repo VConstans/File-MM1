@@ -40,7 +40,7 @@ public class Stats
 
 			System.out.println("lambda < mu : file stable");
 			System.out.println("ro = "+ro);
-			System.out.println("Nombre de clients attendus (lambda*duree) = "+(lambda*duree));
+			System.out.println("Nombre de clients attendus (lambda*duree) = "+((int)(lambda*duree)));
 			System.out.println("Probabilite de service sans attente (1-ro) = "+(1-ro));
 			System.out.println("Probabilite de file occupee (ro) = "+ro);
 			System.out.println("Debit (lambda) = "+lambda);
@@ -69,7 +69,7 @@ public class Stats
 
 		
 		System.out.println("\n\n\n-------------------\nRESULTAT SIMULATION\n-------------------");
-		System.out.println("Nombre total de clients = "+nbClientTot);
+		System.out.println("Nombre total de clients = "+((int)(nbClientTot)));
 		System.out.println("Proportion de client sans attente = "+(clientSansAttente/nbClientTot));
 		System.out.println("Proportion de client avec attente = "+(clientAvecAttente/nbClientTot));
 		System.out.println("Debit = "+(nbClientTot/duree));
